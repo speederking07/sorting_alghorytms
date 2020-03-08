@@ -38,7 +38,7 @@ fn mix_double_sort<X, A>(mut array: X, ord: fn(&A, &A) -> bool) -> Stat
     Stat::new()
 }
 
-fn mix_sort<X, A>(mut array: X, ord: fn(&A, &A) -> bool) -> Stat
+pub fn mix_sort<X, A>(mut array: X, ord: fn(&A, &A) -> bool) -> Stat
     where X: AsMut<[A]>, A: Clone
 {
     let arr = array.as_mut();

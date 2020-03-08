@@ -4,12 +4,15 @@ extern crate rand;
 use std::{env, io};
 use std::fs::File;
 use std::io::Write;
-use std::ops::Add;
 use std::time::Instant;
 use rand::*;
-use std::str::SplitWhitespace;
-use list2::*;
+use list2::insert_sort::insert_sort;
+use list2::merge_sort::merge_sort;
+use list2::quick_sort::quick_sort;
+use list2::double_sort::double_sort;
+use list2::mix_sort::mix_sort;
 use list2::stat::Stat;
+
 
 fn u32_insert_sort(mut a: &mut Vec<u32>, b: fn(&u32, &u32) -> bool) -> Stat {
     insert_sort(&mut a, b)
@@ -36,7 +39,7 @@ fn test_function(function: fn(& mut Vec<u32>, fn(&u32, &u32) -> bool) -> Stat,
 {
     let mut data: Vec<u32> = Vec::new();
     let mut rng = rand::thread_rng();
-    for i in 0..n {
+    for _i in 0..n {
         data.push(rng.gen());
     }
     let now = Instant::now();
@@ -50,7 +53,10 @@ fn test_and_save(function: fn(& mut Vec<u32>, fn(&u32, &u32) -> bool) -> Stat,
     for i in 1..=100 {
         let (c, s, t) = test_function(function, ord, i * 100);
         let to_write = format!("{};{};{};{}\n", i * 100, c, s, t);
-        file.write(to_write.as_ref());
+        match file.write(to_write.as_ref()){
+            Ok(_o) => (),
+            Err(err) => panic!("{}", err)
+        }
     }
 }
 
@@ -149,27 +155,27 @@ fn main() {
             println!("Creating stats");
             match args[s_arg_pos+1].as_str() {
                 "merge" => {
-                    for i in 0..k {
+                    for _i in 0..k {
                         test_and_save(u32_merge_sort, ord, &mut file);
                     }
                 }
                 "insert" => {
-                    for i in 0..k {
+                    for _i in 0..k {
                         test_and_save(u32_insert_sort, ord, &mut file);
                     }
                 }
                 "quick" => {
-                    for i in 0..k {
+                    for _i in 0..k {
                         test_and_save(u32_quick_sort, ord, &mut file);
                     }
                 }
                 "double" => {
-                    for i in 0..k {
+                    for _i in 0..k {
                         test_and_save(u32_double_sort, ord, &mut file);
                     }
                 }
                 "mix" => {
-                    for i in 0..k {
+                    for _i in 0..k {
                         test_and_save(u32_mix_sort, ord, &mut file);
                     }
                 }
