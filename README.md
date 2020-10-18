@@ -5,3 +5,5 @@ Example of sorting algorithms in rust. And module to testing their complexity.
 - quick sort
 - insert sort
 - quicksort with double pivot
+- radix sort
+- deterministic quick sort
