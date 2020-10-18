@@ -1,3 +1,4 @@
+/* Double pivot sort */
 use crate::stat::Stat;
 
 pub fn double_partition<A>(arr: &mut [A], ord: fn(&A, &A) -> bool) -> (usize, usize, Stat)
@@ -16,12 +17,15 @@ pub fn double_partition<A>(arr: &mut [A], ord: fn(&A, &A) -> bool) -> (usize, us
     let mut high_end = arr.len() - 2;
     while i <= high_end {
         stat.comp();
+        //jeśli &arr[i] > mały pivot
         if !ord(&l, &arr[i]) {
             stat.swap();
             arr.swap(low_end, i);
             low_end += 1;
+        //jeśli &arr[i] < duży pivot
         } else if !ord(&arr[i], &h) {
             stat.comp();
+            //szukanie elementu do zamiany
             while !ord(&arr[high_end], &h) && i < high_end {
                 stat.comp();
                 high_end -= 1;
@@ -39,6 +43,7 @@ pub fn double_partition<A>(arr: &mut [A], ord: fn(&A, &A) -> bool) -> (usize, us
         }
         i += 1;
     }
+    //ustawianne pivotów na swoje miejsca
     stat.swap();
     arr.swap(low_end - 1, 0);
     stat.swap();

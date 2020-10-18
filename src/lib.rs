@@ -4,3 +4,6 @@ pub mod insert_sort;
 pub mod quick_sort;
 pub mod double_sort;
 pub mod mix_sort;
+pub mod radix_sort;
+pub mod select;
+pub mod improved_quick_sort;

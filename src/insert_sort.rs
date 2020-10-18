@@ -16,5 +16,6 @@ pub fn insert_sort<X, A>(mut array: X, ord: fn(&A, &A) -> bool) -> Stat
             }
         }
     }
+    stat.add_mem((24) as i32);
     stat
 }
